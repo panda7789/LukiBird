@@ -5,7 +5,7 @@ public class BirdMove : MonoBehaviour {
 	
 	Vector3 velocity = Vector3.zero;
 	
-	float flapSpeed    = 80f;
+	float flapSpeed    = 300f;
 	float forwardSpeed = 1f;
 	
 	bool didFlap = false;
@@ -18,7 +18,7 @@ public class BirdMove : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown(0) ) {
 			didFlap=true;
 		}
-		if (Input.touchCount == 1) & (input.phase.began) {
+		else if ((Input.touchCount == 1) && (Input.GetTouch(0).phase == TouchPhase.Began)) {
 			didFlap=true;
 				}
 	}
@@ -34,8 +34,8 @@ public class BirdMove : MonoBehaviour {
 		}
 
 		
-
+	}
 	
 	}
-}
+
 
