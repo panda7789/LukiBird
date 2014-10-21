@@ -18,7 +18,7 @@ public class BirdMove : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown(0) ) {
 			didFlap=true;
 		}
-		if (Input.touchCount == 1) {
+		if (Input.touchCount == 1) & (input.phase.began) {
 			didFlap=true;
 				}
 	}
@@ -32,13 +32,8 @@ public class BirdMove : MonoBehaviour {
 			didFlap = false;
 
 		}
-		if (rigidbody2D.velocity.y > 0) {
-			transform.rotation = Quaternion.Euler(0,0, 0);
-				}
-		else{
-			float angle = Mathf.Lerp(0,0, -rigidbody2D.velocity.y / 2f);
-			transform.rotation = Quaternion.Euler(0,0, angle);
-		}
+
+		
 
 	
 	}
