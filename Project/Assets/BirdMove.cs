@@ -5,7 +5,7 @@ public class BirdMove : MonoBehaviour {
 	
 	Vector3 velocity = Vector3.zero;
 	
-	float flapSpeed    = 300f;
+	float flapSpeed    = 110f;
 	float forwardSpeed = 1f;
 	
 	bool didFlap = false;
@@ -34,6 +34,9 @@ public class BirdMove : MonoBehaviour {
 
 		rigidbody2D.AddForce (Vector2.right * forwardSpeed);
 		if (didFlap) {
+			Vector2 v = rigidbody2D.velocity;
+			v.y = 0;
+			rigidbody2D.velocity = v;
 			rigidbody2D.AddForce (Vector2.up * flapSpeed);
 
 			didFlap = false;
