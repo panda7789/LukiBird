@@ -9,13 +9,17 @@ public class BirdMove : MonoBehaviour {
 	float forwardSpeed = 1f;
 	
 	bool didFlap = false;
+	bool dead = false;
+
+	Animator animator;
 	// Use this for initialization
 	void Start () {
-		
+		animator = GetComponentInChildren<Animator> ();
 		
 	}
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown(0) ) {
+			animator.SetTrigger("DoFlap");
 			didFlap=true;
 		}
 		else if ((Input.touchCount == 1) && (Input.GetTouch(0).phase == TouchPhase.Began)) {
@@ -25,6 +29,9 @@ public class BirdMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		if (dead)
+						return;
+
 		rigidbody2D.AddForce (Vector2.right * forwardSpeed);
 		if (didFlap) {
 			rigidbody2D.AddForce (Vector2.up * flapSpeed);
@@ -35,7 +42,10 @@ public class BirdMove : MonoBehaviour {
 
 		
 	}
-	
+	void OnCollisionEnter2D(Collision2D collision){
+		animator.SetTrigger("Death");
+		dead = true;
+	}
 	}
 
 
