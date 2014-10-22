@@ -9,7 +9,8 @@ public class BirdMove : MonoBehaviour {
 	float forwardSpeed = 1f;
 	
 	bool didFlap = false;
-	bool dead = false;
+	public bool dead = false;
+	float deathCooldown;
 
 	Animator animator;
 	// Use this for initialization
@@ -18,12 +19,25 @@ public class BirdMove : MonoBehaviour {
 		
 	}
 	void Update(){
+		if (dead) {
+						deathCooldown -= Time.deltaTime; 
+						if (deathCooldown <= 0) {
+								if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0)) {
+										Application.LoadLevel (Application.loadedLevel);
+
+								} else if ((Input.touchCount == 1) && (Input.GetTouch (0).phase == TouchPhase.Began)) {
+										Application.LoadLevel (Application.loadedLevel);
+								}
+						}
+				}
+
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown(0) ) {
 			animator.SetTrigger("DoFlap");
 			didFlap=true;
 		}
 		else if ((Input.touchCount == 1) && (Input.GetTouch(0).phase == TouchPhase.Began)) {
-			didFlap=true;
+						animator.SetTrigger("DoFlap");
+						didFlap=true;
 				}
 	}
 	
@@ -48,6 +62,7 @@ public class BirdMove : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D collision){
 		animator.SetTrigger("Death");
 		dead = true;
+		deathCooldown = 0.5f;
 	}
 	}
 
